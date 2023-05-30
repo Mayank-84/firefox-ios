@@ -2,7 +2,6 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/
 
-import Foundation
 import Sentry
 
 public protocol SentryWrapper {
@@ -10,8 +9,8 @@ public protocol SentryWrapper {
     var dsn: String? { get }
 
     func startWithConfigureOptions(configure options: @escaping (Options) -> Void)
-    func captureMessage(message: String, with scopeBlock: @escaping (Scope) -> Void)
-    func addBreadcrumb(crumb: Breadcrumb)
+    func capture(message: String, with scopeBlock: @escaping (Scope) -> Void)
+    func addBreadcrumb(_ crumb: Breadcrumb)
     func configureScope(scope: @escaping (Scope) -> Void)
 }
 
@@ -36,11 +35,11 @@ public class DefaultSentry: SentryWrapper {
         SentrySDK.start(configureOptions: options)
     }
 
-    public func captureMessage(message: String, with scopeBlock: @escaping (Scope) -> Void) {
+    public func capture(message: String, with scopeBlock: @escaping (Scope) -> Void) {
         SentrySDK.capture(message: message, block: scopeBlock)
     }
 
-    public func addBreadcrumb(crumb: Breadcrumb) {
+    public func addBreadcrumb(_ crumb: Breadcrumb) {
         SentrySDK.addBreadcrumb(crumb)
     }
 

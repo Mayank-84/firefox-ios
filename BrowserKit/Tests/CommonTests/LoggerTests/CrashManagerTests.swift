@@ -197,13 +197,13 @@ private class MockSentryWrapper: SentryWrapper {
     }
 
     var savedMessage: String?
-    func captureMessage(message: String, with scopeBlock: @escaping (Scope) -> Void) {
+    func capture(message: String, with scopeBlock: @escaping (Scope) -> Void) {
         savedMessage = message
     }
 
     var savedBreadcrumb: Breadcrumb?
-    func addBreadcrumb(crumb: Breadcrumb) {
-        savedBreadcrumb = crumb
+    func addBreadcrumb(_ crumb: Breadcrumb) {
+        savedBreadcrumb = _ crumb
     }
 
     var configureScopeCalled = 0

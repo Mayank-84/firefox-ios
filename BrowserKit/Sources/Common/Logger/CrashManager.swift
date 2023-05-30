@@ -44,9 +44,9 @@ public class DefaultCrashManager: CrashManager {
     }
 
     // MARK: - Init
-    private var appInfo: BrowserKitInformation
-    private var sentryWrapper: SentryWrapper
-    private var isSimulator: Bool
+    private let appInfo: BrowserKitInformation
+    private let sentryWrapper: SentryWrapper
+    private let isSimulator: Bool
 
     // Only enable app hang tracking in Beta for now
     private var shouldEnableAppHangTracking: Bool {
@@ -127,7 +127,7 @@ public class DefaultCrashManager: CrashManager {
         // Capture event if Sentry is enabled and a message is available
         guard let message = event.message?.formatted else { return }
 
-        sentryWrapper.captureMessage(message: message, with: { scope in
+        sentryWrapper.capture(message: message, with: { scope in
             scope.setEnvironment(event.environment)
             scope.setExtras(event.extra)
         })
@@ -137,7 +137,7 @@ public class DefaultCrashManager: CrashManager {
         let breadcrumb = Breadcrumb(level: level.sentryLevel,
                                     category: category.rawValue)
         breadcrumb.message = message
-        sentryWrapper.addBreadcrumb(crumb: breadcrumb)
+        sentryWrapper.addBreadcrumb(breadcrumb)
     }
 
     private func makeEvent(message: String,
